@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "servectl"
-version = "0.1.0"
+version = "0.2.0"
 description = "Serve a model file over HTTP with health and Prometheus metrics."
 readme = "README.md"
 requires-python = ">=3.10"
