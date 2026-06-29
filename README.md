@@ -24,7 +24,8 @@ $ curl -s localhost:8000/predict -d '{"instances": [[5.1, 3.5, 1.4, 0.2]]}'
 ## Install
 
 ```console
-$ pip install servectl
+$ pip install servectl                 # from PyPI, once released
+$ pip install git+https://github.com/jmweb-org/servectl   # latest, available now
 ```
 
 Loads any joblib/pickle artifact that exposes a scikit-learn-style `predict`
