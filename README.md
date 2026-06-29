@@ -1,5 +1,10 @@
 # servectl
 
+[![CI](https://github.com/jmweb-org/servectl/actions/workflows/ci.yml/badge.svg)](https://github.com/jmweb-org/servectl/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/servectl.svg)](https://pypi.org/project/servectl/)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Serve a model file over HTTP in one command, with health and Prometheus metrics
 built in.
 
