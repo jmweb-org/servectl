@@ -56,6 +56,55 @@ The `/metrics` endpoint exposes:
 
 Each server uses its own registry, so the counters reflect only that process.
 
+### Prometheus scrape example
+
+If `servectl` is running on port 8000, add a scrape job like this to
+`prometheus.yml`:
+
+```yaml
+scrape_configs:
+  - job_name: "servectl"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["localhost:8000"]
+```
+
+For multiple model servers, give each target a stable label so dashboards can
+separate them:
+
+```yaml
+scrape_configs:
+  - job_name: "servectl"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["iris-api:8000"]
+        labels:
+          model: "iris"
+      - targets: ["churn-api:8000"]
+        labels:
+          model: "churn"
+```
+
+### Grafana panel queries
+
+Use these PromQL queries for a basic dashboard:
+
+| Panel | PromQL |
+| --- | --- |
+| Request rate | `sum by (endpoint, outcome) (rate(servectl_requests_total[5m]))` |
+| Prediction throughput | `rate(servectl_predictions_total[5m])` |
+| p95 prediction latency | `histogram_quantile(0.95, sum by (le) (rate(servectl_predict_seconds_bucket[5m])))` |
+
+For per-model latency when you added a `model` scrape label, group the histogram
+by both `model` and `le`:
+
+```promql
+histogram_quantile(
+  0.95,
+  sum by (model, le) (rate(servectl_predict_seconds_bucket[5m]))
+)
+```
+
 ## Scope
 
 `servectl` is for trying a model, demos, and internal services. It does no
